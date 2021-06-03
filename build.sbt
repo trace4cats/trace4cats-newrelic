@@ -33,9 +33,8 @@ lazy val publishSettings = commonSettings ++ Seq(
 
 lazy val root = (project in file("."))
   .settings(noPublishSettings)
-  .settings(name := "Trace4Cats Opentelemetry")
+  .settings(name := "Trace4Cats NewRelic")
   .aggregate(`newrelic-http-exporter`)
-
 
 lazy val `newrelic-http-exporter` =
   (project in file("modules/newrelic-http-exporter"))
@@ -47,7 +46,7 @@ lazy val `newrelic-http-exporter` =
         Dependencies.circeParser,
         Dependencies.http4sCirce,
         Dependencies.http4sBlazeClient,
-                Dependencies.trace4catsModel,
+        Dependencies.trace4catsModel,
         Dependencies.trace4catsKernel,
         Dependencies.trace4catsExporterCommon,
         Dependencies.trace4catsExporterHttp
