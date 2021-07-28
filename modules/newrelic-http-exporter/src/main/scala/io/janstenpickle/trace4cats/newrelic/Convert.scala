@@ -4,7 +4,7 @@ import cats.Foldable
 import cats.syntax.foldable._
 import cats.syntax.show._
 import io.circe.syntax._
-import io.circe.{Encoder, Json, JsonObject}
+import io.circe.{Encoder, Json}
 import io.janstenpickle.trace4cats.`export`.SemanticTags
 import io.janstenpickle.trace4cats.model.{AttributeValue, Batch, CompletedSpan}
 
@@ -22,30 +22,26 @@ object Convert {
   }
 
   def attributesJson(attributes: Map[String, AttributeValue]): Json =
-    Json.fromJsonObject(JsonObject.fromMap(Map("attributes" -> attributes.asJson)))
+    Json.obj("attributes" := attributes.asJson)
 
   def spanJson(span: CompletedSpan): Json =
-    Json.fromJsonObject(
-      JsonObject.fromMap(
-        Map(
-          "trace.id" -> Json.fromString(span.context.traceId.show),
-          "id" -> Json.fromString(span.context.spanId.show),
-          "attributes" ->
-            attributesJson(
-              span.allAttributes ++ SemanticTags.kindTags(span.kind) ++ SemanticTags
-                .statusTags("")(span.status) ++ Map[String, AttributeValue](
-                "duration.ms" -> AttributeValue.LongValue(span.end.toEpochMilli - span.start.toEpochMilli),
-                "name" -> span.name
-              ) ++ span.context.parent.map { parent =>
-                "parent.id" -> AttributeValue.StringValue(parent.spanId.show)
-              }.toMap
-            )
+    Json.obj(
+      "trace.id" := span.context.traceId.show,
+      "id" := span.context.spanId.show,
+      "attributes" :=
+        attributesJson(
+          span.allAttributes ++ SemanticTags.kindTags(span.kind) ++ SemanticTags.statusTags("")(span.status) ++
+            Map[String, AttributeValue](
+              "duration.ms" -> AttributeValue.LongValue(span.end.toEpochMilli - span.start.toEpochMilli),
+              "name" -> span.name
+            ) ++ span.context.parent.map { parent =>
+              "parent.id" -> AttributeValue.StringValue(parent.spanId.show)
+            }.toMap
         )
-      )
     )
 
   def toJson[G[_]: Foldable](batch: Batch[G]): Json =
-    List(JsonObject.fromMap(Map("spans" -> Json.fromValues(batch.spans.foldLeft(ListBuffer.empty[Json]) { (buf, span) =>
+    List(Json.obj("spans" := batch.spans.foldLeft(ListBuffer.empty[Json]) { (buf, span) =>
       buf += spanJson(span)
-    })))).asJson
+    })).asJson
 }
