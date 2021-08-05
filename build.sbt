@@ -41,8 +41,7 @@ lazy val `newrelic-http-exporter` =
     .settings(
       name := "trace4cats-newrelic-http-exporter",
       libraryDependencies ++= Seq(
-        Dependencies.circeGeneric,
-        Dependencies.circeParser,
+        Dependencies.circeCore,
         Dependencies.http4sCirce,
         Dependencies.http4sBlazeClient,
         Dependencies.trace4catsModel,
