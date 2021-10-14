@@ -2,7 +2,6 @@ package io.janstenpickle.trace4cats.newrelic
 
 import cats.Foldable
 import cats.effect.kernel.{Async, Resource, Temporal}
-import cats.syntax.applicative._
 import io.circe.Json
 import io.janstenpickle.trace4cats.`export`.HttpSpanExporter
 import io.janstenpickle.trace4cats.kernel.SpanExporter
@@ -21,8 +20,7 @@ object NewRelicSpanExporter {
     endpoint: Endpoint,
     ec: Option[ExecutionContext] = None
   ): Resource[F, SpanExporter[F, G]] = for {
-    ec <- Resource.eval(ec.fold(Async[F].executionContext)(_.pure))
-    client <- BlazeClientBuilder[F](ec).resource
+    client <- ec.fold(BlazeClientBuilder[F])(BlazeClientBuilder[F].withExecutionContext).resource
     exporter <- Resource.eval(apply[F, G](client, apiKey, endpoint))
   } yield exporter
 
