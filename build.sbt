@@ -36,7 +36,6 @@ lazy val `newrelic-http-exporter` =
       libraryDependencies ++= Seq(
         Dependencies.circeCore,
         Dependencies.http4sCirce,
-        Dependencies.http4sBlazeClient,
         Dependencies.trace4catsModel,
         Dependencies.trace4catsKernel,
         Dependencies.trace4catsExporterCommon,
