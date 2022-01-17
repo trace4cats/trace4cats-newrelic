@@ -22,7 +22,7 @@ object Convert {
   }
 
   def attributesJson(attributes: Map[String, AttributeValue]): Json =
-    Json.obj("attributes" := attributes.asJson)
+    attributes.asJson
 
   def spanJson(span: CompletedSpan): Json =
     Json.obj(
