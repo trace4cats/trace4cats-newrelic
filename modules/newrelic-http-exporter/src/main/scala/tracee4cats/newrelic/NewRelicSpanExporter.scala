@@ -1,15 +1,15 @@
-package io.janstenpickle.trace4cats.newrelic
+package tracee4cats.newrelic
 
 import cats.Foldable
 import cats.effect.kernel.Temporal
 import io.circe.Json
-import io.janstenpickle.trace4cats.`export`.HttpSpanExporter
-import io.janstenpickle.trace4cats.kernel.SpanExporter
-import io.janstenpickle.trace4cats.model.Batch
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.client.Client
 import org.http4s.headers.`Content-Type`
 import org.http4s.{Header, MediaType}
+import trace4cats.HttpSpanExporter
+import trace4cats.kernel.SpanExporter
+import trace4cats.model.Batch
 
 object NewRelicSpanExporter {
   def apply[F[_]: Temporal, G[_]: Foldable](client: Client[F], apiKey: String, endpoint: Endpoint): SpanExporter[F, G] =

@@ -1,4 +1,4 @@
-package io.janstenpickle.trace4cats.newrelic
+package tracee4cats.newrelic
 
 import org.http4s.Uri
 
