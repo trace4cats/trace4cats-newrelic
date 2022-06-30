@@ -1,12 +1,12 @@
-package io.janstenpickle.trace4cats.newrelic
+package tracee4cats.newrelic
 
 import cats.Foldable
 import cats.syntax.foldable._
 import cats.syntax.show._
 import io.circe.syntax._
 import io.circe.{Encoder, Json}
-import io.janstenpickle.trace4cats.`export`.SemanticTags
-import io.janstenpickle.trace4cats.model.{AttributeValue, Batch, CompletedSpan}
+import trace4cats.SemanticTags
+import trace4cats.model.{AttributeValue, Batch, CompletedSpan}
 
 import scala.collection.mutable.ListBuffer
 
