@@ -1,4 +1,4 @@
-package tracee4cats.newrelic
+package trace4cats.newrelic
 
 import cats.Foldable
 import cats.syntax.foldable._

@@ -1,4 +1,4 @@
-package tracee4cats.newrelic
+package trace4cats.newrelic
 
 import cats.effect.kernel.{Async, Resource}
 import fs2.Chunk
