@@ -13,7 +13,7 @@
 Add it to your `build.sbt`:
 
 ```scala
-"io.janstenpickle" %% "trace4cats-newrelic-http-exporter" % "0.13.1"
+"io.janstenpickle" %% "trace4cats-newrelic-http-exporter" % "0.14.0"
 ```
 
 
